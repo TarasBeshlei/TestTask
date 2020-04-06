@@ -22,6 +22,11 @@ public class TaskController {
     @Autowired
     private SharedTaskRepo sharedTaskRepo;
 
+    @PostMapping(path = "/logout")
+    public String logOut() {
+        return "redirect:/login";
+    }
+
     @PostMapping(path="/task")
     public String addNewTask(String taskBody, Authentication authentication,
                              Map<String, Object> model) {
@@ -85,5 +90,7 @@ public class TaskController {
         sharedTaskRepo.save(sharedTask);
         return "redirect:/task";
     }
+
+
 
 }
