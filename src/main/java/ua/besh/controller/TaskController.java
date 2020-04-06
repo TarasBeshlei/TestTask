@@ -1,14 +1,12 @@
 package ua.besh.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import ua.besh.domain.Message;
 import ua.besh.domain.SharedTask;
 import ua.besh.domain.Task;
-import ua.besh.repos.MessageRepo;
 import ua.besh.repos.SharedTaskRepo;
 import ua.besh.repos.TaskRepo;
 
@@ -56,6 +54,9 @@ public class TaskController {
         task.forEach(target::add);
 
         model.put("task", target);
+        if (!sharedTasksIds.isEmpty()) {
+            model.put("taskType", true);
+        }
         model.put("sharedTask", sharedTask);
 
         return "task";

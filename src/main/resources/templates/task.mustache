@@ -10,7 +10,7 @@
             var res1;
             $.ajax({
                 type:"GET",
-                url: "http://localhost:8080/task",
+                url: "/task",
                 cache: false,
                 success: function(response) {
                     res1 = response;
@@ -20,7 +20,7 @@
             setInterval(function() {
                 $.ajax({
                     type:"GET",
-                    url: "http://localhost:8080/task",
+                    url: "/task",
                     cache: false,
                     success: function(response) {
                         if(response !== res1) {
@@ -47,15 +47,15 @@
                 <input type="hidden" name="_csrf" value="{{_csrf.token}}">
                 <button type="submit" class="btn btn-danger"> Log out </button>
             </form>
-            </div>  
+            </div>
         </form>
 
 
     </div>
     <div class="container">
-        <div>Messages list</div>
+        <p>Messages list</p>
         {{#task}}
-        <div class="card text-white bg-secondary mb-6" style="max-width: 20rem; position: relative; display: inline-block;">
+        <div class="card text-white bg-secondary mb-6" style="max-width: 20rem; position: relative; display: inline-block; margin: 0.4pc">
             <div class="card-header">
                 <div style="display: inline-block">
 
@@ -88,14 +88,13 @@
                                 </button>
                             </div>
                             <div class="modal-body" style="color: black">
-                                <form action="/task/share/{{id}}" method="post" id="shareForm">
-                                    Enter user email: <input type="text" name="sharedEmail" class="form-control"/>
+                                <form  method="post" id="shareForm">
+                                    Enter user email: <input type="email" name="sharedEmail" class="form-control"/>
                                     <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
-
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Save changes</button>
+                                <button type="submit" class="btn btn-primary" onclick="checkEmailValid('{{id}}')">Save changes</button>
                                 </form>
                             </div>
                         </div>
@@ -117,7 +116,10 @@
                 </div>
         </div>
         {{/task}}
-        <p style=""> SHARED TASKS </p>
+        {{#taskType}}
+            <p style=""> SHARED TASKS </p>
+        {{/taskType}}
+
         <div class="sharedBody" id="sharedBody">
             {{#sharedTask}}
 
@@ -133,7 +135,8 @@
                         </form>
                     Author: {{messageAuthor}}
                 </div>
-                <div class="card-body{{id}}">
+                <div class="card-body{{id}}" style="margin: 15px">
+                    <p>Task: </p>
                     <p class="card-text">{{messageBody}}</p>
                 </div>
                 <div id="editTaskForm{{id}}" style="display: none">

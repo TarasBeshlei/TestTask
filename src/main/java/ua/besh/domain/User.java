@@ -1,7 +1,5 @@
 package ua.besh.domain;
 
-import ua.besh.domain.Role;
-
 import javax.persistence.*;
 import java.util.Set;
 
